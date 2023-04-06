@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # PHP Server
+  php:
+    build:
+      context: ./docker/local
+      dockerfile: ./Dockerfile
+    image: tutorial_server
+    container_name: tutorial_server 
+    restart: always  
+    volumes_from:
+      - application
+    ports:
+      - "80:80"
+    #   - "443:443"
+    networks:
+      - tutorial-network-test 
+    depends_on:
+      - mysql
+  
+  # App 
+  application:
+    build: ./
+    image: tutorial_server
+    container_name: tutorial_app  
+    restart: always
+    volumes:
+      - ../../api/:/var/www/html/tutorial/api/
+      - ../../web/:/var/www/html/tutorial/web/   
+    networks:
+      - tutorial-network-test 
+    depends_on:
+      - mysql
+
+  # Cron Services
+#   cron:
+#     build: ./
+#     image: tutorial_server
+#     container_name: tutorial_cron 
+#     working_dir: /cron
+#     restart: always
+#     entrypoint: ["cron", "-f"]
+#     volumes:
+#       - ../../backup/:/cron/backup/    
+#     networks:
+#       - tutorial-network-test 
+#     depends_on:
+#       - mysql
+#       - php    
+#       - application
+    
+  #Banco de Dados
+  mysql:
+    image: mariadb:10.4.12-bionic
+    container_name: tutorial_mysql_data
+    restart: always
+    environment:
+     - MYSQL_ROOT_PASSWORD='root' 
+     - MYSQL_USER=root
+     - MYSQL_PASSWORD=root
+     - MYSQL_DATABASE=mysql
+     - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    ports:
+        - '3306:3306'
+    volumes:
+      - tutorial-local-mysql-data:/var/lib/mysql
+    networks:
+      - tutorial-network-test 
+    
+volumes:
+  tutorial-local-mysql-data:
+
+networks:
+  tutorial-network-test:
