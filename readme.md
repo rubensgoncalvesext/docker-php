@@ -1,4 +1,4 @@
-# Tutorial Desenvolvendo com Docker#
+# Tutorial Desenvolvendo com Docker
 
 ## Instalação ##
 
@@ -17,21 +17,19 @@ https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-t
 * Enter user name: dev and password: dev
 
 
-## Como criar uma Imagem/Container ##
+## Como criar uma Imagem/Container no Docker ##
     
-    1.idea criar uma aplicação com apache + mysql ou mariaDB + php8.0
+    1.Idea criar uma aplicação com apache + mysql ou mariaDB + php8.0
 
-    2.criar o DockerFile
+    2.Criar o DockerFile
         * Como escrever o dockerfile
                 https://docs.docker.com/engine/reference/builder/#from
 
-        * Criar o compose
-            como escrever o compose.yml
+        * Criar o arquivo compose.yml
+
             https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
         
-        * Rodar aplicação fazendo os acesso a base e criar um index.html
-
-    3. entrar no terminal do container e criar um usuario externo para o BD
+    3. Entrar no terminal do container e criar um usuario externo para o BD
 
         docker-compose  -f docker/local/compose.yml exec mysql bash
         # mysql -u root -p
@@ -40,7 +38,10 @@ https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-t
         > GRANT ALL PRIVILEGES ON *.* TO 'teste'@'%' IDENTIFIED BY 'teste' WITH GRANT OPTION;
         > flush privileges;
 
-    4. entrar no terminal da aplicação  
+    4. Rodar uma aplicação fazendo os acesso ao banco de dados e criar um index.html 
+        fazendo uma chamada Ajax para o BackEnd php.
+    
+    5. entrar no terminal da aplicação  
 
         docker-compose  -f docker/local/compose.yml exec php bash 
 
