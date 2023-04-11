@@ -1,1 +1,79 @@
-<h1>Ola mundo</h1>
+<html>
+    <head>
+        <style>
+            table {
+              font-family: arial, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+            
+            td, th {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+            }
+            
+            tr:nth-child(even) {
+              background-color: #dddddd;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <section>
+            <h1>Cadastro</h1>
+            <p>cadastro de usuarios</p>
+            <label>Nome:</label><input type="text" id="fname" name="fname">
+            <button id="btn_cadastrar">Cadastrar</button>
+         </section>
+        <br>
+        <section>
+            <h1>Listagem</h1>
+            <p>listagem de usuarios</p>
+            <table id="tabela" style="width: 30%; border: 1px solid;">
+                <thead>
+                    <th>ID</th>
+                    <th>Nome</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </body>
+</html>
+
+<script>
+    $(document).ready(function(){
+        
+        /** Listar usuarios*/
+        function lista() {
+            $.get("../api/index.php", function(data, status){
+                if (status) {
+                    $("table tbody").empty();
+                    const res = JSON.parse(data);
+                    res['data'].forEach(res => {
+                        var item = "<tr><td>"+res['id']+"</td><td>"+res['name']+"</td></tr>";
+                        $("tbody").append(item);
+                    });
+                }
+            });
+        }
+
+        /** Cadastar novo usuario*/
+        $("#btn_cadastrar").click(function(){
+            $.post("../api/index.php",
+            {
+                case: "cadastro",
+                fname: $("#fname").val(),
+            },
+            function(data, status){
+                alert("Data: " + data + "\nStatus: " + status);
+                lista();
+            });
+        });
+        
+        lista();
+
+    });
+
+
+</script>

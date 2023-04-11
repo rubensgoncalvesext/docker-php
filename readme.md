@@ -38,10 +38,29 @@ https://learn.microsoft.com/en-us/windows/wsl/install-manual#step-4---download-t
         > GRANT ALL PRIVILEGES ON *.* TO 'teste'@'%' IDENTIFIED BY 'teste' WITH GRANT OPTION;
         > flush privileges;
 
+        > CREATE TABLE `test`.`users` (
+          `id` INT NOT NULL,
+        `name` VARCHAR(255) NULL);
+
+        >ALTER TABLE `test`.`users` 
+        ADD PRIMARY KEY (`id`)
+       
+        >ALTER TABLE `test`.`users` 
+        CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+
     4. Rodar uma aplicação fazendo os acesso ao banco de dados e criar um index.html 
         fazendo uma chamada Ajax para o BackEnd php.
     
-    5. entrar no terminal da aplicação  
+    5. Entrar no terminal da aplicação  
 
         docker-compose  -f docker/local/compose.yml exec php bash 
+
+
+
+## Referencias ##
+
+    https://www.w3schools.com/php/default.asp
+
+
 
